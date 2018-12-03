@@ -4,6 +4,7 @@ import { Switch, Route, NavLink } from "react-router-dom";
 import './App.css';
 import HomePage from "./components/HomePage.js";
 import NotFound from "./components/NotFound.js";
+import PhoneList from "./components/PhoneList.js";
 
 class App extends Component {
   render() {
@@ -14,11 +15,13 @@ class App extends Component {
 
           <nav>
             <NavLink exact to="/">Home</NavLink>
+            <NavLink to="/phone-list">Our Phones</NavLink>
           </nav>
         </header>
 
         <Switch>
           <Route exact path="/" component={HomePage} />
+          <Route path="/phone-list" component={PhoneList} />
 
           {/* 404 route LAST */}
           <Route component={NotFound} />
