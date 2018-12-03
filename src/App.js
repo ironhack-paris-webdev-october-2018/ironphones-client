@@ -5,6 +5,7 @@ import './App.css';
 import HomePage from "./components/HomePage.js";
 import NotFound from "./components/NotFound.js";
 import PhoneList from "./components/PhoneList.js";
+import PhoneDetails from "./components/PhoneDetails.js";
 
 class App extends Component {
   render() {
@@ -22,6 +23,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/phone-list" component={PhoneList} />
+          <Route path="/phone-details/:phoneId" component={PhoneDetails} />
 
           {/* 404 route LAST */}
           <Route component={NotFound} />

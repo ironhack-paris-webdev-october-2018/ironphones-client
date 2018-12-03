@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
+function getPhoneUrl(onePhone) {
+  return `/phone-details/${onePhone._id}`;
+}
 
 class PhoneList extends Component {
   constructor(props) {
@@ -36,7 +41,11 @@ class PhoneList extends Component {
           {phoneArray.map(onePhone => {
             return (
               <li key={onePhone._id}>
-                <h3>{onePhone.model}</h3>
+                <h3>
+                  <Link to={getPhoneUrl(onePhone)}>
+                    {onePhone.model}
+                  </Link>
+                </h3>
                 <p>by {onePhone.brand}</p>
                 <p>€{onePhone.price}</p>
                 <img src={onePhone.image} alt={onePhone.model} />
