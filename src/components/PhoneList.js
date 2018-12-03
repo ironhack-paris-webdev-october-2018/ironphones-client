@@ -37,6 +37,8 @@ class PhoneList extends Component {
       <section className="PhoneList">
         <h2>Our Phones</h2>
 
+        <Link to="/add-phone">Add Your Phone</Link>
+
         <ul>
           {phoneArray.map(onePhone => {
             return (

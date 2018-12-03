@@ -22,7 +22,7 @@ class PhoneDetails extends Component {
         this.setState(response.data);
       })
       .catch(err => {
-        console.log("Phone Details", err);
+        console.log("Phone Details ERROR", err);
         alert("Sorry! Something went wrong.");
       });
   }
