@@ -9,7 +9,6 @@ class SignupPage extends Component {
       fullName: "",
       email: "",
       originalPassword: "",
-      currentUser: null,
     };
   }
 
@@ -25,7 +24,8 @@ class SignupPage extends Component {
       .then(response => {
         console.log("Signup Page", response.data);
         const { userDoc } = response.data;
-        this.setState({ currentUser: userDoc });
+        // send "userDoc" to the App.js function that changes "currentUser"
+        this.props.onUserChange(userDoc);
       })
       .catch(err => {
         console.log("Signup Page ERROR", err);
@@ -34,13 +34,14 @@ class SignupPage extends Component {
   }
 
   render() {
-    if (this.state.currentUser) {
+    // check currentUser (received from App.js)
+    if (this.props.currentUser) {
       return (
         <section className="SignupPage">
           <h2>You are signed up!</h2>
           <p>
-            Welcome, {this.state.currentUser.fullName}!
-            Your user ID is <b>{this.state.currentUser._id}.</b>
+            Welcome, {this.props.currentUser.fullName}!
+            Your user ID is <b>{this.props.currentUser._id}.</b>
           </p>
         </section>
       );

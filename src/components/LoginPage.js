@@ -9,7 +9,6 @@ class LoginPage extends Component {
     this.state = {
       email: "",
       originalPassword: "",
-      currentUser: null,
     };
   }
 
@@ -25,7 +24,8 @@ class LoginPage extends Component {
       .then(response => {
         console.log("Login Page", response.data);
         const { userDoc } = response.data;
-        this.setState({ currentUser: userDoc });
+        // send "userDoc" to the App.js function that changes "currentUser"
+        this.props.onUserChange(userDoc);
       })
       .catch(err => {
         console.log("Login Page ERROR", err);
@@ -34,7 +34,8 @@ class LoginPage extends Component {
   }
 
   render() {
-    if (this.state.currentUser) {
+    // check currentUser (received from App.js)
+    if (this.props.currentUser) {
       return <Redirect to="/phone-list" />
     }
 
