@@ -36,7 +36,11 @@ class AddPhone extends Component {
 
     // PUT and POST requests receive a 2nd argument: the info to submit
     // (we are submitting the state we've gathered from the form)
-    axios.post("http://localhost:5555/api/phones", this.state)
+    axios.post(
+      "http://localhost:5555/api/phones",
+      this.state,
+      { withCredentials: true }, // FORCE axios to send cookies across domains
+    )
       .then(response => {
         console.log("Add Phone", response.data);
         this.setState({ isSubmitSuccessful: true });

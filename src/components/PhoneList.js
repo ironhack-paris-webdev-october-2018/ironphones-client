@@ -19,7 +19,10 @@ class PhoneList extends Component {
   // React will call "componentDidMount()" automatically when PhoneList loads
   componentDidMount() {
     // retrieve the info from the API as soon as the component loads
-    axios.get("http://localhost:5555/api/phones")
+    axios.get(
+      "http://localhost:5555/api/phones",
+      { withCredentials: true }, // FORCE axios to send cookies across domains
+    )
       .then(response => {
         console.log("Phone List", response.data);
         // update our state array with the data from the API

@@ -20,7 +20,11 @@ class LoginPage extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    axios.post("http://localhost:5555/api/login", this.state)
+    axios.post(
+      "http://localhost:5555/api/login",
+      this.state,
+      { withCredentials: true }, // FORCE axios to send cookies across domains
+    )
       .then(response => {
         console.log("Login Page", response.data);
         const { userDoc } = response.data;

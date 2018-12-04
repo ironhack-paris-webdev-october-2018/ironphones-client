@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route, NavLink } from "react-router-dom";
+import axios from "axios";
 
 import './App.css';
 import HomePage from "./components/HomePage.js";
@@ -19,10 +20,43 @@ class App extends Component {
     };
   }
 
+  componentDidMount() {
+    // React doesn't know at the start if we are logged-in or not
+    // (but we can ask the server if we are through an API request)
+    axios.get(
+      "http://localhost:5555/api/checkuser",
+      { withCredentials: true }, // FORCE axios to send cookies across domains
+    )
+    .then(response => {
+      console.log("Check User", response.data);
+      const { userDoc } = response.data;
+      this.syncCurrentUser(userDoc);
+    })
+    .catch(err => {
+      console.log("Check User ERROR", err);
+      alert("Sorry! Something went wrong.");
+    });
+  }
+
   // this is the method for updating "currentUser"
   // (must be defined in App.js since it's the owner of "currentUser" now)
   syncCurrentUser(userDoc) {
     this.setState({ currentUser: userDoc });
+  }
+
+  logoutClick() {
+    axios.delete(
+      "http://localhost:5555/api/logout",
+      { withCredentials: true }, // FORCE axios to send cookies across domains
+    )
+    .then(() => {
+      // make "currentUser" empty again (like it was at the start)
+      this.syncCurrentUser(null);
+    })
+    .catch(err => {
+      console.log("Logout ERROR", err);
+      alert("Sorry! Something went wrong.");
+    });
   }
 
   render() {
@@ -34,8 +68,19 @@ class App extends Component {
           <nav>
             <NavLink exact to="/">Home</NavLink>
             <NavLink to="/phone-list">Our Phones</NavLink>
-            <NavLink to="/signup-page">Sign Up</NavLink>
-            <NavLink to="/login-page">Log In</NavLink>
+            {this.state.currentUser ? (
+              <span>
+                <b>{this.state.currentUser.email}</b>
+                <button onClick={() => this.logoutClick()}>
+                  Log Out
+                </button>
+              </span>
+            ) : (
+              <span>
+                <NavLink to="/signup-page">Sign Up</NavLink>
+                <NavLink to="/login-page">Log In</NavLink>
+              </span>
+            )}
           </nav>
         </header>
 

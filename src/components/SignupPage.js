@@ -20,7 +20,11 @@ class SignupPage extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    axios.post("http://localhost:5555/api/signup", this.state)
+    axios.post(
+      "http://localhost:5555/api/signup",
+      this.state,
+      { withCredentials: true }, // FORCE axios to send cookies across domains
+    )
       .then(response => {
         console.log("Signup Page", response.data);
         const { userDoc } = response.data;
