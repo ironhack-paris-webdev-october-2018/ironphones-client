@@ -104,7 +104,11 @@ class App extends Component {
         </Switch>
 
         <footer>
-          <p>Made with 📱 at Ironhack</p>
+          <p>
+            Made with
+            <span role="img" aria-label="phone">📱</span>
+            at Ironhack
+          </p>
         </footer>
       </div>
     );
