@@ -20,7 +20,7 @@ class PhoneList extends Component {
   componentDidMount() {
     // retrieve the info from the API as soon as the component loads
     axios.get(
-      "http://localhost:5555/api/phones",
+      process.env.REACT_APP_SERVER_URL + "/api/phones",
       { withCredentials: true }, // FORCE axios to send cookies across domains
     )
       .then(response => {

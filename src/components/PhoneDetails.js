@@ -16,7 +16,7 @@ class PhoneDetails extends Component {
     const { params } = this.props.match;
     // retrieve the info from the API as soon as the component loads
     axios.get(
-      `http://localhost:5555/api/phones/${params.phoneId}`,
+      process.env.REACT_APP_SERVER_URL + `/api/phones/${params.phoneId}`,
       { withCredentials: true }, // FORCE axios to send cookies across domains
     )
       .then(response => {

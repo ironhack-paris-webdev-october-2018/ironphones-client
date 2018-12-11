@@ -21,7 +21,7 @@ class SignupPage extends Component {
     event.preventDefault();
 
     axios.post(
-      "http://localhost:5555/api/signup",
+      process.env.REACT_APP_SERVER_URL + "/api/signup",
       this.state,
       { withCredentials: true }, // FORCE axios to send cookies across domains
     )
