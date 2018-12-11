@@ -22,6 +22,30 @@ class AddPhone extends Component {
     this.setState({ [name]: value });
   }
 
+  uploadImage(event) {
+    const { files } = event.target;
+    console.log("File SELECTED", files[0]);
+
+    // the "FormData" class will format the files for sending to our API
+    const uploadData = new FormData();
+    // the name "fileSubmission" is the one your backend route defined.
+    uploadData.append("fileSubmission", files[0]);
+
+    axios.post(
+      process.env.REACT_APP_SERVER_URL + "/api/upload-file",
+      uploadData,
+      { withCredentials: true }
+    )
+    .then(response => {
+      console.log("Upload Image", response.data);
+      this.setState({ image: response.data.fileUrl });
+    })
+    .catch(err => {
+      console.log("Upload Image ERROR", err);
+      alert("Sorry! Something went wrong.");
+    });
+  }
+
   syncSpecs(event, index) {
     const { specs } = this.state;
     // update the spec value at the given index
@@ -84,11 +108,10 @@ class AddPhone extends Component {
           </label>
 
           <label>
-            Image URL:
-            <input value={this.state.image}
-                onChange={event => this.genericSync(event)}
-                type="url" name="image" placeholder="http://example.com" />
+            Image:
+            <input type="file" onChange={event => this.uploadImage(event)} />
           </label>
+          <img src={this.state.image} />
 
           <h3>Specs</h3>
           <p>3 characters or more</p>
